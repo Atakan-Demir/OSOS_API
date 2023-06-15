@@ -1,5 +1,5 @@
 # OSOS_API
- İnternet Programcılığı II Vize
+ Online Sınav Otomasyon Sistemi (OSOS) geliştirmesi kapsamında Arayüzde yapılan değşikliklere uygun olarak api yenilenmiştir.
 
 ### Veri Tabanı Diagramı:
 
