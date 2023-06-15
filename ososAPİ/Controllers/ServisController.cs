@@ -9,6 +9,7 @@ using System.Web.Http;
 
 namespace ososAPİ.Controllers
 {
+    
     public class ServisController : ApiController
     {
         Database1Entities db = new Database1Entities();
@@ -18,6 +19,7 @@ namespace ososAPİ.Controllers
 
         [HttpGet]
         [Route("api/uyelistele")]
+        
         public List<UyeModel> UyeListele()
         {
             List<UyeModel> liste = db.Uye.Select(x => new UyeModel()
@@ -26,7 +28,8 @@ namespace ososAPİ.Controllers
                 adsoyad=x.adsoyad,
                 mail=x.mail,
                 parola=x.parola,
-                admin=x.admin
+                admin=x.admin,
+                uyeDersSayisi = x.UyeDers.Count()
             }).ToList();
             return liste;
 
@@ -43,7 +46,8 @@ namespace ososAPİ.Controllers
                 adsoyad = x.adsoyad,
                 mail = x.mail,
                 parola = x.parola,
-                admin = x.admin
+                admin = x.admin,
+                uyeDersSayisi = x.UyeDers.Count()
             }).SingleOrDefault();
             return kayit;
 
@@ -90,13 +94,14 @@ namespace ososAPİ.Controllers
                 return sonuc;
             }
 
-            if (db.Uye.Count(s => s.mail == model.mail) > 0)
+            else if (db.Uye.Count(s => s.mail == model.mail) > 0)
             {
                 sonuc.islem = false;
                 sonuc.mesaj = "Girilen Mail Sistemde kayıtlıdır!";
                 return sonuc;
             }
 
+            
             kayit.adsoyad = model.adsoyad;
             kayit.parola = model.parola;
             kayit.admin = model.admin;
@@ -110,10 +115,12 @@ namespace ososAPİ.Controllers
 
             return sonuc;
 
+            
+
         }
 
         [HttpDelete]
-        [Route("api/uyesil{uyeId}")]
+        [Route("api/uyesil/{uyeId}")]
         public SonucModel UyeSil(int uyeId)
         {
             Uye kayit = db.Uye.Where(s => s.uyeId == uyeId).SingleOrDefault();
@@ -148,7 +155,8 @@ namespace ososAPİ.Controllers
                 dersAdi = x.dersAdi,
                 dersId = x.dersId,
                 dersKodu = x.dersKodu,
-                dersKredi = x.dersKredi
+                dersKredi = x.dersKredi,
+                dersOgrSayisi=x.UyeDers.Count()
             }).ToList();
             return liste;
 
@@ -164,7 +172,8 @@ namespace ososAPİ.Controllers
                 dersAdi = x.dersAdi,
                 dersId = x.dersId,
                 dersKodu = x.dersKodu,
-                dersKredi = x.dersKredi
+                dersKredi = x.dersKredi,
+                dersOgrSayisi = x.UyeDers.Count()
             }).SingleOrDefault();
             return kayit;
 
@@ -237,9 +246,9 @@ namespace ososAPİ.Controllers
             return sonuc;
 
         }
-
+        
         [HttpDelete]
-        [Route("api/derssil{dersId}")]
+        [Route("api/derssil/{dersId}")]
         public SonucModel DersSil(int dersId)
         {
             Ders kayit = db.Ders.Where(s => s.dersId == dersId).FirstOrDefault();
@@ -270,7 +279,7 @@ namespace ososAPİ.Controllers
 
         [HttpGet]
         [Route("api/uyederslistele/{uyeId}")]
-        public List<UyeDersModel> OgrenciDersListele(int uyeId)
+        public List<UyeDersModel> UyeDersListele(int uyeId)
         {
             List<UyeDersModel> liste = db.UyeDers.Where(s => s.uId == uyeId).Select(x => new UyeDersModel()
             {
@@ -291,7 +300,7 @@ namespace ososAPİ.Controllers
 
         [HttpGet]
         [Route("api/dersuyelistele/{dersId}")]
-        public List<UyeDersModel> DersOgrenciListele(int dersId)
+        public List<UyeDersModel> DersUyeListele(int dersId)
         {
             List<UyeDersModel> liste = db.UyeDers.Where(s => s.dId == dersId).Select(x => new UyeDersModel()
             {
@@ -312,8 +321,13 @@ namespace ososAPİ.Controllers
         [Route("api/uyedersekle")]
         public SonucModel UyeDersEkle(UyeDersModel model)
         {
-            if (db.UyeDers.Count(s => s.dId == model.dId && s.uId ==
-            model.uId) > 0)
+            if (model == null)
+            {
+                sonuc.islem = false;
+                sonuc.mesaj = "Eklenecek Birşey bulunamadı";
+                return sonuc;
+            }
+            if (db.UyeDers.Count(s => s.dId == model.dId && s.uId == model.uId) > 0)
             {
                 sonuc.islem = false;
                 sonuc.mesaj = "İlgili Üye Derse Zaten Kayıtlıdır!";
@@ -455,7 +469,7 @@ namespace ososAPİ.Controllers
                 sonuc.mesaj = "Düzenlenecek Sınav Bulunamadı!";
                 return sonuc;
             }
-            if(db.Sinav.Count(s=>s.sinavAdi==model.sinavAdi) > 0)
+            if(db.Sinav.Count(s=>s.sinavAdi==model.sinavAdi && s.sinavId != model.sinavId) > 0)
             {
                 sonuc.islem = false;
                 sonuc.mesaj = "Aynı İsime Sahip Sınav Bulunmaktadır!";
@@ -475,7 +489,7 @@ namespace ososAPİ.Controllers
         }
 
         [HttpDelete]
-        [Route("api/sinavsil")]
+        [Route("api/sinavsil/{sinavId}")]
         public SonucModel SinavSil(int sinavId)
         {
             Sinav kayit = db.Sinav.Where(s=>s.sinavId==sinavId).SingleOrDefault();
@@ -516,7 +530,13 @@ namespace ososAPİ.Controllers
                 soruId = x.soruId,
                 soruSinavId = x.soruSinavId,
                 soruText = x.soruText,
+               
             }).ToList();
+
+            foreach (var soru in liste)
+            {
+                soru.secenekler = SecenekSoruListele(soru.soruId);
+            }
 
             return liste;
         }
@@ -531,7 +551,10 @@ namespace ososAPİ.Controllers
                 soruSinavId=x.soruSinavId,
                 soruText=x.soruText
             }).ToList();
-
+            foreach (var soru in liste)
+            {
+                soru.secenekler = SecenekSoruListele(soru.soruId);
+            }
             return liste;
         }
 
@@ -545,7 +568,10 @@ namespace ososAPİ.Controllers
                 soruSinavId = x.soruSinavId,
                 soruText = x.soruText
             }).SingleOrDefault();
-
+            
+            
+            kayit.secenekler = SecenekSoruListele(kayit.soruId);
+            
             return kayit;
         }
 
@@ -586,7 +612,7 @@ namespace ososAPİ.Controllers
                 sonuc.mesaj = "Soru Bulunamadı!";
                 return sonuc;
             }
-            if (db.Soru.Count(s => s.soruText == model.soruText) > 0)
+            if (db.Soru.Count(s => s.soruText == model.soruText ) > 0)
             {
                 sonuc.islem = false;
                 sonuc.mesaj = "Girilen Soru Kayıtlıdır!";
@@ -677,7 +703,7 @@ namespace ososAPİ.Controllers
                 sonuc.mesaj = "Bir soruda en fazla 5 şık olabilir!";
                 return sonuc;
             }
-            if (liste.Count(s => s.secenekText == model.secenekText) > 0)
+            if (liste.Count(s => s.secenekText == model.secenekText ) > 0)
             {
                 sonuc.islem = false;
                 sonuc.mesaj = "Seçenek Zaten mevcuttur!";
@@ -723,16 +749,17 @@ namespace ososAPİ.Controllers
                 sonuc.mesaj = "Secenek Bulunamadı!";
                 return sonuc;
             }
+            /*
             foreach (var i in liste) // doğru cevap sayısının bir olması için kontrol
             {
-                if (i.cevap == 1)
+                if (i.cevap == 1 &&)
                 {
                     sonuc.islem = false;
                     sonuc.mesaj = "Birden fazla doğru seçenek olamaz!";
                     return sonuc;
                 }
-            }
-            if (liste.Count(s => s.secenekText == model.secenekText) > 0)
+            }*/
+            if (liste.Count(s => s.secenekText == model.secenekText && s.secenekId != model.secenekId) > 0)
             {
                 sonuc.islem = false;
                 sonuc.mesaj = "Seçenek Zaten mevcuttur!";
@@ -763,6 +790,12 @@ namespace ososAPİ.Controllers
                 return sonuc;
             }
             // uyecevap kontrolü buraya yapılacak!!!
+            if (db.UyeCevap.Count(s => s.secId == secenekId) > 0)
+            {
+                sonuc.islem = false;
+                sonuc.mesaj = "Üyelerin cevapları olduğu için seçenek silinemez!";
+                return sonuc;
+            }
             db.Secenek.Remove(kayit);
             db.SaveChanges();
 

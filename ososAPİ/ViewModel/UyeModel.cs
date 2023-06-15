@@ -12,5 +12,6 @@ namespace ososAPİ.ViewModel
         public int admin { get; set; }
         public string mail { get; set; }
         public string parola { get; set; }
+        public int uyeDersSayisi { get; set; }
     }
 }

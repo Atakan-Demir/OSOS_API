@@ -11,5 +11,6 @@ namespace ososAPİ.ViewModel
         public string dersAdi { get; set; }
         public string dersKodu { get; set; }
         public int dersKredi { get; set; }
+        public int dersOgrSayisi { get; set; }
     }
 }

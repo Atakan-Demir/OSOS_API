@@ -75,3 +75,17 @@ C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\obj\Debug\ososAPİ.csproj.CoreCo
 C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\obj\Debug\ososAPİ.csproj.CopyComplete
 C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\obj\Debug\ososAPİ.dll
 C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\obj\Debug\ososAPİ.pdb
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\Microsoft.Owin.Cors.dll
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\Microsoft.Owin.dll
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\Microsoft.Owin.Security.dll
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\Owin.dll
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\System.Web.Cors.dll
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\System.Web.Http.Owin.dll
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\Microsoft.Owin.xml
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\Microsoft.Owin.Cors.xml
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\Microsoft.Owin.Security.xml
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\DmR\Desktop\OSOS ASP.NET APİ\ososAPİ\bin\System.Web.Http.Owin.xml
